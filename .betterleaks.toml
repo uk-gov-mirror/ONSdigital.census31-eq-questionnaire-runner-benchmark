@@ -1,0 +1,7 @@
+[allowlist]
+description = "Ignore test keys, benchmark outputs, and KID constants"
+paths = [
+    '''jwt-test-keys''',
+    '''megalinter-reports''',
+    '''runner_benchmark/token_generator\.py''',
+]

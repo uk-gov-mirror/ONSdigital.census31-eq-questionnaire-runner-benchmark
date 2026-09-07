@@ -14,7 +14,13 @@ COPY poetry.lock poetry.lock
 RUN pip install "poetry==2.1.2" \
     --no-cache-dir \
     && poetry config virtualenvs.create false \
-    && poetry install --only main
+    && poetry install --only main \
+    && useradd --create-home --shell /bin/bash benchmark \
+    && chown -R benchmark:benchmark /benchmark
+
+USER benchmark
+
+HEALTHCHECK NONE
 
 # Start Locust using LOCUS_OPTS environment variable
 ENTRYPOINT ["bash", "./docker_entrypoint.sh"]

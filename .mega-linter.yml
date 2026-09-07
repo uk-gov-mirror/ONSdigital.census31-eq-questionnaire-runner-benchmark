@@ -15,13 +15,23 @@ ENABLE:
   - DOCKERFILE
   - EDITORCONFIG
   - JSON
-  - MAKEFILE
   - MARKDOWN
+  - REPOSITORY
   - YAML
 
 FORMATTERS_DISABLE_ERRORS: false
 SHOW_ELAPSED_TIME: true
 FLAVOR_SUGGESTIONS: false
 
+DISABLE_LINTERS:
+  - REPOSITORY_GITLEAKS # Superseded by betterleaks (deprecated in MegaLinter v10)
+  - REPOSITORY_TRUFFLEHOG # Secret scanning covered by betterleaks and secretlint
+  - REPOSITORY_KINGFISHER # Only produced false positives on benchmark CSV data; overlaps with betterleaks/secretlint
+  - REPOSITORY_GRYPE # 52s; vulnerability scanning covered by trivy and osv-scanner
+  - REPOSITORY_TRIVY_SBOM # Redundant with syft
+
 ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
   - GITHUB_TOKEN
+
+REPOSITORY_SECRETLINT_FILTER_REGEX_EXCLUDE: "(jwt-test-keys/)"
+REPOSITORY_SECRETLINT_ARGUMENTS: "--secretlintignore .secretlintignore"
